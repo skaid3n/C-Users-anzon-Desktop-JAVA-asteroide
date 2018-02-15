@@ -15,8 +15,8 @@ import javafx.stage.Stage;
 
 public class Asteroids extends Application {
     
-    int naveTurboX=0;
-    int naveTurboY=0;
+    int turboNaveX=0;
+    int turboNaveY=0;
     
     int posicionBalaY = 50;
     int posicionBalaX = 50;
@@ -33,7 +33,7 @@ public class Asteroids extends Application {
     double naveDireccionY = 0;
     double naveDireccionX = 0;
     
-    int posicionNaveY =500;
+    int posicionNaveY =300;
     int posicionNaveX =400;
     
     double giroBala;
@@ -93,11 +93,10 @@ public class Asteroids extends Application {
 //        root.getChildren().add(propulsor);
 //        propulsor.setLayoutX(?);
 //        propulsor.setLayoutY(?);
-//        propulsor.setFill(Color.RED);
         nave.getChildren().addAll(poligono);
         root.getChildren().add(nave);
-//        root.getChildren().add(grupoAsteroide);
-
+        root.getChildren().add(grupoAsteroide);
+//        root.getChildren().add(propulsor);
         
         
         
@@ -106,9 +105,9 @@ public class Asteroids extends Application {
             @Override
             public void handle(long now) {
                 
-                posicionNaveX+=naveSpeedX + naveTurboX;
+                posicionNaveX+=naveSpeedX + turboNaveX;
                 nave.setLayoutX(posicionNaveX);
-                posicionNaveY+=naveSpeedY + naveTurboY;
+                posicionNaveY+=naveSpeedY + turboNaveY;
                 nave.setLayoutY(posicionNaveY);
                 
                 posicionBalaX+=balaVelocidadX;
@@ -120,15 +119,12 @@ public class Asteroids extends Application {
                 giroNaveRadianes=Math.toRadians(naveGiro);
                 naveSpeedX=Math.cos(giroNaveRadianes)*absoluteSpeed;
                 naveSpeedY=Math.sin(giroNaveRadianes)*absoluteSpeed;
-                balaVelocidadX=Math.cos(giroNaveRadianes)*balaVelocidadAbsoluta;
-                balaVelocidadY=Math.sin(giroNaveRadianes)*balaVelocidadAbsoluta;
+
                 
                 
                 if(posicionNaveY<=0){
-                    //Ponemos la barra en la posicion 0 para que no se nos valla
                     posicionNaveY = SCENE_TAM_X;
                 }else{
-                    //Para no sobrepasar el vorde inferior
                     if(posicionNaveY>=SCENE_TAM_X){
                         posicionNaveY = 0;
                     }
@@ -144,7 +140,7 @@ public class Asteroids extends Application {
                 }  
             }
             private void calculateBallSpeed(int collisionZone) {
-                throw new UnsupportedOperationException("Not supported yet.");
+                throw new UnsupportedOperationException(".");
             }
             
         };
@@ -160,19 +156,9 @@ public class Asteroids extends Application {
                     break;
                 case D:
                     naveGiro = naveGiro+5;
-                    if(naveGiro>=360){
-                        naveGiro=0;
-                        nave.setLayoutX(posicionNaveX);
-//                        bala.setLayoutX(posicionBalaX);
-                    }
                     break;
                 case A:
                     naveGiro = naveGiro-5;
-                    if(naveGiro==-90){
-                        naveGiro=270;
-                        nave.setLayoutX(posicionNaveX);
-//                        bala.setLayoutX(posicionBalaX);
-                    }
                     break;
                 case SPACE:
                     bala = new Circle();
@@ -183,9 +169,10 @@ public class Asteroids extends Application {
                     root.getChildren().add(bala);
                     posicionBalaX=posicionNaveX;
                     posicionBalaY=posicionNaveY;
-                    bala.getTransforms().add(new Rotate (90,00,0));
                     balaVelocidadAbsoluta=5;
-//                    balaVelocidadAbsoluta+=5;        
+                    balaVelocidadAbsoluta+=1;
+                    balaVelocidadX=Math.cos(giroNaveRadianes)*balaVelocidadAbsoluta;
+                    balaVelocidadY=Math.sin(giroNaveRadianes)*balaVelocidadAbsoluta;
                     break;
                 }
             nave.setRotate(naveGiro);
