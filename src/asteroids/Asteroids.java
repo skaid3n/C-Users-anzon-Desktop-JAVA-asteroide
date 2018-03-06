@@ -21,8 +21,8 @@ public class Asteroids extends Application {
     int posicionBalaY = 50;
     int posicionBalaX = 50;
     
-    double naveSpeedY = 0;
-    double naveSpeedX = 0;
+//    double naveSpeedY = 0;
+//    double naveSpeedX = 0;
     
     double absoluteSpeed =0;
     double balaVelocidadAbsoluta =1;
@@ -30,8 +30,8 @@ public class Asteroids extends Application {
     double balaVelocidadX = 0;
     double balaVelocidadY = 0;
     
-    double naveDireccionY = 0;
-    double naveDireccionX = 0;
+//    double naveDireccionY = 0;
+//    double naveDireccionX = 0;
     
     int posicionNaveY =300;
     int posicionNaveX =400;
@@ -42,17 +42,17 @@ public class Asteroids extends Application {
     double naveGiro;
     double giroNaveRadianes;
     
-    int centroNave;
-    int anchoNave = 15;
-    int velocidadGiro = 0;
-    
+//    int centroNave;
+//    int anchoNave = 15;
+//    int velocidadGiro = 0;
+   
     final int SCENE_TAM_X = 600;
     final int SCENE_TAM_Y = 800;
     
     
-    Group nave;
+    
     Circle bala = new Circle();
-   
+    
     
     
     @Override
@@ -63,28 +63,21 @@ public class Asteroids extends Application {
         primaryStage.setTitle("asteroidspava");
         primaryStage.setScene(scene);
         primaryStage.show();
-        nave = new Group();
-        Polygon poligono = new Polygon();
-        poligono.getPoints().addAll(new Double[]{
-            0.0, -20.0,
-            -15.0, 20.0,
-            15.0, 20.0 
-        });
-        poligono.setFill(Color.RED);
-        Polygon grupoAsteroide = new Polygon();
-        grupoAsteroide.getPoints().addAll(new Double[]{
-            0.0, -20.0,
-            -15.0, 20.0,
-            -15.0, 40.0,
-            15.0, 20.0,
-            30.0, 0.0 
-        });
-        grupoAsteroide.setFill(Color.BLACK);
-        grupoAsteroide.setLayoutX(30);
-        grupoAsteroide.setLayoutY(30);
-        nave.setLayoutX(posicionNaveX);
-        nave.setLayoutY(posicionNaveY);
-        nave.getTransforms().add(new Rotate (90,00,0));
+        
+        Nave nave1 = new Nave();
+
+//        Polygon grupoAsteroide = new Polygon();
+//        grupoAsteroide.getPoints().addAll(new Double[]{
+//            0.0, -20.0,
+//            -15.0, 20.0,
+//            -15.0, 40.0,
+//            15.0, 20.0,
+//            30.0, 0.0 
+//        });
+//        grupoAsteroide.setFill(Color.BLACK);
+//        grupoAsteroide.setLayoutX(400);
+//        grupoAsteroide.setLayoutY(400);
+        nave1.posicionNave();
 //        Circle propulsor = new Circle();
 //        propulsor.setCenterX(10);
 //        propulsor.setCenterY(30);
@@ -93,51 +86,20 @@ public class Asteroids extends Application {
 //        root.getChildren().add(propulsor);
 //        propulsor.setLayoutX(?);
 //        propulsor.setLayoutY(?);
-        nave.getChildren().addAll(poligono);
-        root.getChildren().add(nave);
-        root.getChildren().add(grupoAsteroide);
+        root.getChildren().add(nave1.formaNave);
+//        root.getChildren().add(grupoAsteroide);
 //        root.getChildren().add(propulsor);
-        
-        
-        
         
         AnimationTimer animacionAsteroide = new AnimationTimer(){
             @Override
             public void handle(long now) {
                 
-                posicionNaveX+=naveSpeedX + turboNaveX;
-                nave.setLayoutX(posicionNaveX);
-                posicionNaveY+=naveSpeedY + turboNaveY;
-                nave.setLayoutY(posicionNaveY);
-                
+                nave1.VelocidadNave();
+
                 posicionBalaX+=balaVelocidadX;
                 bala.setLayoutX(posicionBalaX);
                 posicionBalaY+=balaVelocidadY;
                 bala.setLayoutY(posicionBalaY);
-                
-                
-                giroNaveRadianes=Math.toRadians(naveGiro);
-                naveSpeedX=Math.cos(giroNaveRadianes)*absoluteSpeed;
-                naveSpeedY=Math.sin(giroNaveRadianes)*absoluteSpeed;
-
-                
-                
-                if(posicionNaveY<=0){
-                    posicionNaveY = SCENE_TAM_X;
-                }else{
-                    if(posicionNaveY>=SCENE_TAM_X){
-                        posicionNaveY = 0;
-                    }
-                }
-                nave.setLayoutY(posicionNaveY);
-                
-                if(posicionNaveX<=0){
-                    posicionNaveX = SCENE_TAM_Y;
-                }else{
-                    if(posicionNaveX>=SCENE_TAM_Y){
-                        posicionNaveX = 0;
-                    }
-                }  
             }
             private void calculateBallSpeed(int collisionZone) {
                 throw new UnsupportedOperationException(".");
@@ -149,7 +111,7 @@ public class Asteroids extends Application {
         scene.setOnKeyPressed((KeyEvent event)-> {
             switch(event.getCode()){
                 case W:
-                    absoluteSpeed+=1;
+                    nave1.acelerar();
                     break;
                 case S:
                     absoluteSpeed-=1;
@@ -175,7 +137,7 @@ public class Asteroids extends Application {
                     balaVelocidadY=Math.sin(giroNaveRadianes)*balaVelocidadAbsoluta;
                     break;
                 }
-            nave.setRotate(naveGiro);
+            nave1.naveGiro();
             bala.setRotate(naveGiro);
         });
         scene.setOnKeyReleased((KeyEvent event) -> {
