@@ -2,15 +2,11 @@ package asteroids;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 public class Asteroids extends Application {
@@ -97,12 +93,9 @@ public class Asteroids extends Application {
                 nave1.VelocidadNave();
 
                 posicionBalaX+=balaVelocidadX;
-                bala.setLayoutX(posicionBalaX);
+                bala.setTranslateX(posicionBalaX);
                 posicionBalaY+=balaVelocidadY;
-                bala.setLayoutY(posicionBalaY);
-            }
-            private void calculateBallSpeed(int collisionZone) {
-                throw new UnsupportedOperationException(".");
+                bala.setTranslateY(posicionBalaY);
             }
             
         };
@@ -114,15 +107,16 @@ public class Asteroids extends Application {
                     nave1.acelerar();
                     break;
                 case S:
-                    absoluteSpeed-=1;
+                    nave1.marchaAtras();
                     break;
                 case D:
-                    naveGiro = naveGiro+5;
+                    nave1.derechaD();
                     break;
                 case A:
-                    naveGiro = naveGiro-5;
+                    nave1.izquierdaA();
                     break;
                 case SPACE:
+                    Bala bala = new Bala(nave1.posicionNaveX, posicionNaveY);
                     bala = new Circle();
                     bala.setCenterX(10);
                     bala.setCenterY(30);
@@ -143,7 +137,7 @@ public class Asteroids extends Application {
         scene.setOnKeyReleased((KeyEvent event) -> {
             switch(event.getCode()){
             case W:
-                absoluteSpeed-= 1;
+                nave1.marchaAtras();
                 break;
             }
             

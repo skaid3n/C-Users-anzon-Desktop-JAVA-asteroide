@@ -1,7 +1,5 @@
 package asteroids;
 
-import javafx.scene.Group;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Rotate;
@@ -33,27 +31,26 @@ public class Nave {
     final int SCENE_TAM_X = 600;
     final int SCENE_TAM_Y = 800;
     
-    Group formaNave;
-    
+    Polygon formaNave = new Polygon();
+            
     public Nave(){
-        
-       
-        formaNave = new Group();
-        Polygon poligono = new Polygon();
-        poligono.getPoints().addAll(new Double[]{
+               
+        formaNave.setFill(Color.RED);
+        formaNave.getPoints().addAll(new Double[]{
             0.0, -20.0,
             -15.0, 20.0,
             15.0, 20.0 
         });
-        poligono.setFill(Color.RED);
+        
         
     }
     
     public void VelocidadNave(){
         posicionNaveX+=naveSpeedX + turboNaveX;
-        formaNave.setLayoutX(posicionNaveX);
+        formaNave.setTranslateX(posicionNaveX);
+        
         posicionNaveY+=naveSpeedY + turboNaveY;
-        formaNave.setLayoutY(posicionNaveY);
+        formaNave.setTranslateY(posicionNaveY);
                         
         giroNaveRadianes=Math.toRadians(naveGiro);
         naveSpeedX=Math.cos(giroNaveRadianes)*absoluteSpeed;
@@ -66,7 +63,6 @@ public class Nave {
             posicionNaveY = 0;
             }
         }
-        formaNave.setLayoutY(posicionNaveY);
 
         if(posicionNaveX<=0){
             posicionNaveX = SCENE_TAM_Y;
@@ -78,16 +74,37 @@ public class Nave {
     }
     
     public void acelerar(){
-        absoluteSpeed+=1;
-        
+        absoluteSpeed+=1;   
     }
+    
+    public void marchaAtras(){
+        absoluteSpeed-=1;
+    }
+    
+    public void derechaD(){
+        naveGiro+= 10;
+    }
+    
+    public void izquierdaA(){
+        naveGiro -= 10;
+    }
+    
     public void posicionNave(){
-        formaNave.setLayoutX(posicionNaveX);
-        formaNave.setLayoutY(posicionNaveY);
+        formaNave.setTranslateX(posicionNaveX);
+        formaNave.setTranslateY(posicionNaveY);
         formaNave.getTransforms().add(new Rotate (90,00,0));
     }
+    
     public void naveGiro(){
         formaNave.setRotate(naveGiro);
+    }
+    
+    public void palabalaX(){
+        posicionNaveX+=naveSpeedX + turboNaveX;
+        formaNave.setTranslateX(posicionNaveX);
+        
+        giroNaveRadianes=Math.toRadians(naveGiro);
+        naveSpeedX=Math.cos(giroNaveRadianes)*absoluteSpeed;
     }
 
 }
