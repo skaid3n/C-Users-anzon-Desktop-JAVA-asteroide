@@ -47,7 +47,7 @@ public class Asteroids extends Application {
     
     
     
-    Circle bala = new Circle();
+//    Circle bala = new Circle();
     
     
     
@@ -61,6 +61,7 @@ public class Asteroids extends Application {
         primaryStage.show();
         
         Nave nave1 = new Nave();
+        Bala bala1 = new Bala();
 
 //        Polygon grupoAsteroide = new Polygon();
 //        grupoAsteroide.getPoints().addAll(new Double[]{
@@ -91,11 +92,12 @@ public class Asteroids extends Application {
             public void handle(long now) {
                 
                 nave1.VelocidadNave();
-
-                posicionBalaX+=balaVelocidadX;
-                bala.setTranslateX(posicionBalaX);
-                posicionBalaY+=balaVelocidadY;
-                bala.setTranslateY(posicionBalaY);
+                
+                bala1.velocidadBala();
+//                posicionBalaX+=balaVelocidadX;
+//                bala.setTranslateX(posicionBalaX);
+//                posicionBalaY+=balaVelocidadY;
+//                bala.setTranslateY(posicionBalaY);
             }
             
         };
@@ -117,12 +119,13 @@ public class Asteroids extends Application {
                     break;
                 case SPACE:
                     Bala bala = new Bala(nave1.posicionNaveX, posicionNaveY);
-                    bala = new Circle();
-                    bala.setCenterX(10);
-                    bala.setCenterY(30);
-                    bala.setRadius(3);
-                    bala.setFill(Color.BLACK);
-                    root.getChildren().add(bala);
+                    
+//                    bala = new Circle();
+//                    bala.setCenterX(10);
+//                    bala.setCenterY(30);
+//                    bala.setRadius(3);
+//                    bala.setFill(Color.BLACK);
+                    root.getChildren().add(bala1);
                     posicionBalaX=posicionNaveX;
                     posicionBalaY=posicionNaveY;
                     balaVelocidadAbsoluta=5;
